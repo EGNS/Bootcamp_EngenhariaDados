@@ -1,0 +1,99 @@
+
+---  Create Schema NBA ---
+
+CREATE SCHEMA NBA;
+
+--- Create da tabela Payroll ---
+
+create table "NBA"."Payroll" (		
+		id SERIAL primary key,
+		"date" date null,
+    	team varchar(100) null,
+    	seasonStartYear int null,
+    	payroll float null,
+    	inflationAdjPayroll float null
+
+);
+
+--- Create da tabela Player Box Score Stats
+
+create table "NBA"."Player_Box_Score_Stats" (	
+	id SERIAL primary key,
+	"date" date null,
+	Game_ID int null,       
+	PLAYER_NAME varchar(100) null,        
+	Team varchar(100) null,        
+	GAME_DATE date null,
+	MATCHU varchar(100) null,        
+	WL varchar(100) null,        
+	"MIN" int null,         
+	FGM int null,         
+	FGA float null,      
+	FG_PCT float null,      
+	FG3M float null,      
+	FG3A float null,      
+	FG3_PCT float null,      
+	FTM int null,         
+	FTA float null,      
+	FT_PCT float null,      
+	OREB float null,      
+	DREB float null,      
+	REB float null,      
+	AST float null,      
+	STL float null,      
+	BLK float null,      
+	TOV float null,      
+	PF float null,
+	PTS int null,         
+	PLUS_MINUS float null,      
+	VIDEO_AVAILABLE int null
+);
+
+--- Create da tabela NBA Player Stats
+create table "NBA"."Play_Stats" (	
+	id SERIAL primary key,
+	"date" date null,	
+	CountYear int null,
+	Season int null,
+	Player varchar(100) null,
+	Pos varchar(100)  null,
+	Age int   null,
+	Tm  varchar(100)  null,
+	G   int   null,
+	GS  float null,
+	MP  int   null,
+	FG  float null,
+	FGA int   null,
+	"FG%" float null,
+	"3P" int   null,
+	"3PA" int   null,
+	"3P%" float null,
+	"2P"  int   null,
+	"2PA" int   null,
+	"2P%" float null,
+	"eFG%" float null,
+	FT  int   null,
+	FTA int   null,
+	"FT%" float null,
+	ORB int   null,
+	DRB int   null,
+	TRB int   null,
+	AST int   null,
+	STL int   null,
+	BLK int   null,
+	TOV int   null,
+	PF  int   null,
+	PTS int  null
+);
+
+--- Create da tabela NBA Salaries
+
+create table "NBA"."Salaries"(	
+	id SERIAL primary key,
+	"date" date null,
+	playerName varchar(100) null,
+	seasonStarYear int null,
+	salary float null,
+	inflationAdjSalary float null
+);
+
