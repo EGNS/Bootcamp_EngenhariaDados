@@ -1,0 +1,62 @@
+from sqlalchemy import create_engine
+import pandas as pd
+import psycopg2
+import decimal
+import numpy as np
+import json
+
+#transformar o arquivo json em dataframe do pandas
+
+df = pd.read_json(r'/Users/abner/Aula_How/Aula004/json_data.json')
+
+#remover coluna logo_url
+df= df.drop('logo_url', axis=1)
+
+#converter as listas e dicionários dentro do json em string
+df = df.applymap(json.dumps)
+
+
+#conectar=se ao banco de dados PostgreSQL
+
+conn = psycopg2.connect(
+    host="localhost",
+    database="db_test",
+    user="root",
+    password="root"
+)
+
+#abrir um cursor para executar comandos SQL
+cur = conn.cursor()
+
+#criar tabelas no banco de dadosjon
+cur.execute("""
+CREATE SCHEMA tech;
+
+CREATE TABLE tech.startups(
+	id TEXT
+	,company_name TEXT
+	,headline TEXT
+	,tags TEXT
+	,website TEXT
+	,employees TEXT
+	,about TEXT
+	,locations TEXT
+	,industries TEXT
+	,jobs TEXT
+	);
+""")
+
+# popular a tabela 
+data_ts = [tuple(x) for x in df.to_numpy()]
+cols = ','.join(list(df.columns))
+
+ts = f"INSERT INTO tech.startups ({cols}) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+cur.executemany(ts, data_ts)
+
+
+# salvar as alterações e encerrar a conexão com o banco de dados
+conn.commit()
+cur.close()
+conn.close()
+
+
